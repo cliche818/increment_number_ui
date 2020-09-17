@@ -26,19 +26,45 @@ class NumberPage extends React.Component {
   }
 
   currentNumber = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/v1/current`,
-      {
-        headers: {
-          "Authorization": `Bearer ${this.apiToken()}`
-        },
-        method: "GET",
-      }
-    )
-    const json = await response.json()
-    
-    const displayMessage = this.createDisplayMessage('current', json)
+    let displayMessage = "Action: next, unknown error"
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/v1/current`,
+        {
+          headers: {
+            "Authorization": `Bearer ${this.apiToken()}`
+          },
+          method: "GET",
+        }
+      )
+      const json = await response.json()
 
-    this.setState({displayMessage: displayMessage})
+      displayMessage = this.createDisplayMessage('current', json)
+    } catch(error) {
+      console.log(error)
+    }
+    
+    this.setState({ displayMessage: displayMessage })
+  }
+
+  nextNumber = async () => {
+    let displayMessage = "Action: next, unknown error"
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/v1/next`,
+        {
+          headers: {
+            "Authorization": `Bearer ${this.apiToken()}`
+          },
+          method: "GET",
+        }
+      )
+      const json = await response.json()
+
+      displayMessage = this.createDisplayMessage('next', json)
+    } catch(error) {
+      console.log(error)
+    }
+    
+    this.setState({ displayMessage: displayMessage })
   }
 
   render() {
@@ -52,6 +78,8 @@ class NumberPage extends React.Component {
         <p>{`${this.state.displayMessage}`}</p>
 
         <button onClick={this.currentNumber}>Current Number </button>
+
+        <button onClick={this.nextNumber}>Next Number </button>
       </div>
     )
   }
