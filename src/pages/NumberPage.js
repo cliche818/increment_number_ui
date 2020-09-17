@@ -5,6 +5,7 @@ import LogoutButton from '../components/LogoutButton'
 class NumberPage extends React.Component {
   constructor(props) {
     super(props)
+    this.resetNumberInput = React.createRef();
     this.state = {
       displayMessage: 'No action taken yet'
     }
@@ -18,8 +19,8 @@ class NumberPage extends React.Component {
     if (!!json["data"]) {
       const number = json["data"]["attributes"]["number"]
       return `Action: ${action}, number: ${number}`
-    } else if (!!json["error"]) {
-      return `Action: ${action}, error: ${json["error"]["title"]} | ${json["error"]["title"]}`
+    } else if (!!json["errors"]) {
+      return `Action: ${action}, error: ${json["errors"]["title"]} | ${json["errors"]["detail"]}`
     } else {
       return `Action: ${action}, unknown error`
     }
@@ -39,10 +40,10 @@ class NumberPage extends React.Component {
       const json = await response.json()
 
       displayMessage = this.createDisplayMessage('current', json)
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
-    
+
     this.setState({ displayMessage: displayMessage })
   }
 
@@ -60,10 +61,34 @@ class NumberPage extends React.Component {
       const json = await response.json()
 
       displayMessage = this.createDisplayMessage('next', json)
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
-    
+
+    this.setState({ displayMessage: displayMessage })
+  }
+
+  resetNumber = async () => {
+    let displayMessage = "Action: reset, unknown error"
+    const number = this.resetNumberInput.current.value
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/v1/reset`,
+        {
+          headers: {
+            "Authorization": `Bearer ${this.apiToken()}`,
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          method: "PUT",
+          body: `number=${number}`
+        }
+      )
+      const json = await response.json()
+
+      displayMessage = this.createDisplayMessage('reset', json)
+    } catch (error) {
+      console.log(error)
+    }
+
     this.setState({ displayMessage: displayMessage })
   }
 
@@ -80,6 +105,14 @@ class NumberPage extends React.Component {
         <button onClick={this.currentNumber}>Current Number </button>
 
         <button onClick={this.nextNumber}>Next Number </button>
+
+        <br />
+        <br />
+        <input
+          ref={this.resetNumberInput}
+          placeholder="number"
+        />
+        <button onClick={this.resetNumber}>Reset Number </button>
       </div>
     )
   }
