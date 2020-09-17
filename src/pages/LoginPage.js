@@ -16,8 +16,6 @@ export default class LoginPage extends React.Component {
     const email = this.emailInput.current.value
     const password = this.passwordInput.current.value
 
-    console.log(`${process.env.REACT_APP_API_URL}/users/sign_in`);
-
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/users/sign_in`,
         {
@@ -39,9 +37,9 @@ export default class LoginPage extends React.Component {
         
         console.log('successful log in')
         console.log(sessionStorage.getItem('api_token'))
+
+        this.props.history.push('/number')
       }
-      
-      
     } catch(error) {
       console.log(error)
     }
