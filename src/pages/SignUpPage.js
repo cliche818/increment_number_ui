@@ -1,7 +1,8 @@
 import React from 'react';
 import { handleAuthRequest } from '../lib/Auth'
 
-export default class LoginPage extends React.Component {
+
+export default class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
     this.emailInput = React.createRef();
@@ -11,13 +12,13 @@ export default class LoginPage extends React.Component {
     }
   }
 
-  loginUser = async () => {
+  SignUpUser = async () => {
     this.setState({errorMessage: ''})
 
     const email = this.emailInput.current.value
     const password = this.passwordInput.current.value
 
-    const message = await handleAuthRequest('/users/sign_in', email, password)
+    const message = await handleAuthRequest('/users/sign_up', email, password)
 
     if (message == 'success') {
       this.props.history.push('/number')
@@ -29,8 +30,8 @@ export default class LoginPage extends React.Component {
   render() {
     return (
       <div>
-        <h1>Login page</h1>
-        <a href="/signup">Go to Sign Up Page</a>
+        <h1>Sign up page</h1>
+        <a href="/login">Go to Login Page</a>
         <br/>
         <br/>
         <input
@@ -43,7 +44,7 @@ export default class LoginPage extends React.Component {
           type="password"
           placeholder="password"
         />
-        <button onClick={this.loginUser}>Sign In</button>
+        <button onClick={this.SignUpUser}>Sign Up</button>
 
         <br/>
         <p>{`${this.state.errorMessage}`}</p>

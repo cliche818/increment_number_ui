@@ -10,7 +10,7 @@ export function requireAuthentication(Component) {
         render() {
             const loginErrorMessage = (
                 <div>
-                    Please <a href="/login">login</a> in order to view this part of the application.
+                    Please <a href="/login">login</a> or <a href="/signup">sign up</a> in order to view this part of the application.
                 </div>
             );
 
