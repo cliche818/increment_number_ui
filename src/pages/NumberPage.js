@@ -1,6 +1,7 @@
 import * as React from 'react';
 import requireAuthentication from '../AuthenticatedComponent';
 import LogoutButton from '../components/LogoutButton'
+import { getApiToken } from '../lib/Auth'
 
 class NumberPage extends React.Component {
   constructor(props) {
@@ -9,10 +10,6 @@ class NumberPage extends React.Component {
     this.state = {
       displayMessage: 'No action taken yet'
     }
-  }
-
-  apiToken = () => {
-    return sessionStorage.getItem('api_token')
   }
 
   createDisplayMessage(action, json) {
@@ -32,7 +29,7 @@ class NumberPage extends React.Component {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/v1/current`,
         {
           headers: {
-            "Authorization": `Bearer ${this.apiToken()}`
+            "Authorization": `Bearer ${getApiToken()}`
           },
           method: "GET",
         }
@@ -53,7 +50,7 @@ class NumberPage extends React.Component {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/v1/next`,
         {
           headers: {
-            "Authorization": `Bearer ${this.apiToken()}`
+            "Authorization": `Bearer ${getApiToken()}`
           },
           method: "GET",
         }
@@ -75,7 +72,7 @@ class NumberPage extends React.Component {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/v1/reset`,
         {
           headers: {
-            "Authorization": `Bearer ${this.apiToken()}`,
+            "Authorization": `Bearer ${getApiToken()}`,
             "Content-Type": "application/x-www-form-urlencoded"
           },
           method: "PUT",

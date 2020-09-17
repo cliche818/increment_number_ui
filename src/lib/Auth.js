@@ -27,3 +27,11 @@ export async function handleAuthRequest(path, email, password) {
 
   return message
 }
+
+export function getApiToken() {
+  return sessionStorage.getItem('api_token')
+}
+
+export function deleteApiToken() {
+  sessionStorage.removeItem('api_token')
+}

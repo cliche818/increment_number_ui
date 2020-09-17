@@ -19,7 +19,7 @@ export default class LoginPage extends React.Component {
 
     const message = await handleAuthRequest('/users/sign_in', email, password)
 
-    if (message == 'success') {
+    if (message === 'success') {
       this.props.history.push('/number')
     } else {
       this.setState({errorMessage: message})

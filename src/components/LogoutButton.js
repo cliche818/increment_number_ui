@@ -1,9 +1,10 @@
 import React from 'react';
+import { deleteApiToken } from '../lib/Auth'
 
 export default class LogoutButton extends React.Component {
 
   logoutAction = () => {
-    sessionStorage.removeItem('api_token')
+    deleteApiToken()
     this.props.history.push('/login')
   }
 

@@ -1,9 +1,11 @@
 import React from "react";
+import { getApiToken} from "./lib/Auth"
 
 export function requireAuthentication(Component) {
     return class AuthenticatedComponent extends React.Component {
         isAuthenticated = () => {
-            const api_token = sessionStorage.getItem('api_token')
+            const api_token = getApiToken()
+            console.log(api_token)
             return !!api_token
         }
 
