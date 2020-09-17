@@ -1,11 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import LoginPage from './pages/LoginPage'
+import NumberPage from './pages/NumberPage'
 
 function App() {
+
   return (
     <div className="App">
-      <hi>Hello world</hi>
+        <Router>
+          <div>
+            <Route exact path="/" component={LoginPage} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/number" component={NumberPage} />
+          </div>
+        </Router>
     </div>
   );
 }
