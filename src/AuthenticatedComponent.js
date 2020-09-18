@@ -5,7 +5,6 @@ export function requireAuthentication(Component) {
     return class AuthenticatedComponent extends React.Component {
         isAuthenticated = () => {
             const api_token = getApiToken()
-            console.log(api_token)
             return !!api_token
         }
 
